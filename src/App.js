@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { AuthProvider } from "./contexts/AuthContext";
+import Router from "./navigation/Router";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+import I18nProvider from "./contexts/I18nContext";
+import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
+import RTLProvider from "./contexts/RTLContext";
+import Layout from "./components/Layout";
+import { themes } from "./lib/theme";
+import { CssBaseline } from "@mui/material";
+
+const queryClient = new QueryClient();
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<ThemeProvider theme={themes.light}>
+			<CssBaseline />
+			<QueryClientProvider client={queryClient}>
+				<RTLProvider>
+					<I18nProvider>
+						<AuthProvider>
+							<Router />
+						</AuthProvider>
+					</I18nProvider>
+				</RTLProvider>
+				<ReactQueryDevtools />
+			</QueryClientProvider>
+		</ThemeProvider>
+	);
 }
 
 export default App;

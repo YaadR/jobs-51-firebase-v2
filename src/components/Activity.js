@@ -1,3 +1,4 @@
+import { Divider } from "@mui/material";
 import useActivitiesQuery from "../hooks/activity/useActivitiesQuery";
 import useCurrentUserQuery from "../hooks/auth/useCurrentUserQuery";
 import CreateActivity from "./CreateActivity";
@@ -13,6 +14,7 @@ export default function Activity() {
 	return (
 		<>
 			<UserHeader uid={currentUserId} />
+      <Divider />
 			<UserActivitiesList uid={data?.id} />
       <CreateActivity />
 		</>

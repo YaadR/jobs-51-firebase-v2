@@ -31,7 +31,6 @@ export default function ActivityForm({ onCancel, defaultValues, onSubmit }) {
 	const {
 		control,
 		handleSubmit,
-		watch,
 		formState: { errors },
 	} = useForm({
 		defaultValues,

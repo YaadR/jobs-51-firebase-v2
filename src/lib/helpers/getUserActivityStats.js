@@ -11,10 +11,6 @@ export default function getUserActivityStats(userActivities, t) {
 			? approvedArr?.reduce((a, b) => parseInt(a) + parseInt(b?.total), 0)
 			: 0;
 
-	console.log({
-		approved,
-		pending,
-	});
 	return [
 		{ label: t?.approved, value: approved },
 		{ label: t?.pending, value: pending },

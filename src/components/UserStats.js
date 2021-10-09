@@ -34,7 +34,7 @@ export default function UserStats({ uid }) {
 			/>
 			<Box>
 				{getUserActivityStats(activities)?.map((stat) => (
-					<ListItem>
+					<ListItem disableGutters>
 						<ListItemIcon>
 							{stat?.label === "approved" && (
 								<AiOutlineCheckCircle size={24} color={palette.primary.main} />

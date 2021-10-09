@@ -14,34 +14,32 @@ const baseTheme = createTheme({
 
 		h1: {
 			fontSize: "1.6rem",
-      fontWeight: 600
+			fontWeight: 600,
 		},
 
 		h2: {
 			fontSize: "1.6rem",
-      fontWeight: 600
+			fontWeight: 600,
 		},
 
 		h3: {
 			fontSize: "1.4rem",
-      fontWeight: 600
+			fontWeight: 600,
 		},
 
 		h4: {
-      fontSize: "1.2rem",
-      fontWeight: 600
+			fontSize: "1.2rem",
+			fontWeight: 600,
 		},
 
 		h5: {
-      fontSize: "1rem",
-      fontWeight: 600
+			fontSize: "1rem",
+			fontWeight: 600,
 		},
 
-		body1: {
-    },
+		body1: {},
 
-		body2: {
-    },
+		body2: {},
 
 		button: {
 			fontFamily: ["Rubik"],
@@ -70,6 +68,14 @@ const baseTheme = createTheme({
 		MuiFormControl: {
 			defaultProps: {
 				margin: "normal",
+			},
+		},
+
+		MuiListItemIcon: {
+			defaultProps: {
+				style: {
+					minWidth: 40,
+				},
 			},
 		},
 	},

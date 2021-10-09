@@ -1,6 +1,7 @@
 import { useTheme } from "@emotion/react";
 import {
 	FormControl,
+	FormHelperText,
 	InputLabel,
 	MenuItem,
 	Select,
@@ -24,7 +25,12 @@ const schema = yup
 	})
 	.required();
 
-export default function ActivityForm({ onCancel, defaultValues, onSubmit, isLoading }) {
+export default function ActivityForm({
+	onCancel,
+	defaultValues,
+	onSubmit,
+	isLoading,
+}) {
 	const { data: currentUserRegion } = useCurrentUserQuery({
 		select: (v) => v?.region,
 	});
@@ -50,7 +56,7 @@ export default function ActivityForm({ onCancel, defaultValues, onSubmit, isLoad
 				isLoading={isLoading}
 				onSubmit={handleSubmit(onSubmit)}
 			>
-				<FormControl fullWidth>
+				<FormControl disabled={!!currentUserRegion}>
 					<InputLabel id='demo-simple-select-label'>{t?.region}</InputLabel>
 					<Select
 						labelId='demo-simple-select-label'
@@ -65,8 +71,10 @@ export default function ActivityForm({ onCancel, defaultValues, onSubmit, isLoad
 							</MenuItem>
 						))}
 					</Select>
+          <FormHelperText>{t?.regionChangeAdmin}</FormHelperText>
 				</FormControl>
 
+				<br />
 				<Controller
 					control={control}
 					name='type'
@@ -106,39 +114,35 @@ export default function ActivityForm({ onCancel, defaultValues, onSubmit, isLoad
 						/>
 					)}
 				/>
-				<Box display='flex' alignItems='center'>
-					<Controller
-						control={control}
-						name='total'
-						render={({ field }) => (
-							<TextField
-								style={{ marginLeft: spacing(2) }}
-								step='0.5'
-								label={t?.hours}
-								fullWidth
-								error={!!errors?.total}
-								helperText={errors?.total?.message}
-								label={t?.totalHours}
-								type='number'
-								{...field}
-							/>
-						)}
-					/>
-					<Controller
-						control={control}
-						name='date'
-						render={({ field }) => (
-							<TextField
-								error={!!errors?.date}
-								helperText={errors?.date?.message}
-								label={t?.date}
-								fullWidth
-								type='date'
-								{...field}
-							/>
-						)}
-					/>
-				</Box>
+				<Controller
+					control={control}
+					name='total'
+					render={({ field }) => (
+						<TextField
+							style={{ marginLeft: spacing(2) }}
+							step='0.5'
+							label={t?.hours}
+							error={!!errors?.total}
+							helperText={errors?.total?.message}
+							label={t?.totalHours}
+							type='number'
+							{...field}
+						/>
+					)}
+				/>
+				<Controller
+					control={control}
+					name='date'
+					render={({ field }) => (
+						<TextField
+							error={!!errors?.date}
+							helperText={errors?.date?.message}
+							label={t?.date}
+							type='date'
+							{...field}
+						/>
+					)}
+				/>
 			</Form>
 		</>
 	);

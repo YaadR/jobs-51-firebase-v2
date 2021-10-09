@@ -10,25 +10,16 @@ import UserHeader from "./UserHeader";
 import UserStats from "./UserStats";
 
 export default function Activity() {
-	const { t } = useI18nContext();
 	const { data: currentUserId } = useCurrentUserQuery({
 		select: (v) => v?.id,
 	});
-	const { data: currentUserRegion } = useCurrentUserQuery({
-		select: (v) => v?.region,
-	});
-	const { data } = useActivitiesQuery();
 
 	return (
 		<>
 			<UserHeader uid={currentUserId} />
 			<UserStats uid={currentUserId} />
 			<Divider sx={{ my: 4 }} />
-			<PrimaryAndSecondaryTypography
-				primary={t?.latestActivities}
-				secondary={`${t?.recentActivitiesInRegion} ${currentUserRegion}`}
-			/>
-			<UserActivitiesList uid={data?.id} />
+			<UserActivitiesList uid={currentUserId} />
 			<CreateActivity />
 		</>
 	);

@@ -9,10 +9,16 @@ import RTLProvider from "./contexts/RTLContext";
 import Layout from "./components/Layout";
 import { themes } from "./lib/theme";
 import { CssBaseline } from "@mui/material";
+import { useEffect } from "react";
+import zeroAllUserHours from "./lib/migrations/zeroAllUserHours";
 
 const queryClient = new QueryClient();
 
 function App() {
+  // useEffect(() => {
+
+  //   zeroAllUserHours()
+  // }, [])
 
 	return (
 		<ThemeProvider theme={themes.light}>

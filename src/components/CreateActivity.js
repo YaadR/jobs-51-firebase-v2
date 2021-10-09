@@ -1,4 +1,4 @@
-import { Fab } from "@mui/material";
+import { Fab, useMediaQuery, useTheme } from "@mui/material";
 import useI18nContext from "../hooks/general/useI18nContext";
 import useToggle from "../hooks/general/useToggle";
 import Dialog from "./Dialog";
@@ -14,6 +14,8 @@ export default function CreateActivity() {
 	const { data: currentUser } = useCurrentUserQuery();
 	const [isOpen, toggleOpen] = useToggle(false);
 	const { t } = useI18nContext();
+	const { breakpoints } = useTheme();
+	const isMobile = useMediaQuery(breakpoints.down("sm"));
 	const { mutateAsync, isLoading } = useCreateActivityMutation({
 		onSuccess: () => {
 			queryClient.invalidateQueries(["user-activities", currentUser?.id]);
@@ -34,6 +36,7 @@ export default function CreateActivity() {
 				dir='rtl'
 				maxWidth='sm'
 				fullWidth
+				fullScreen={isMobile}
 				open={isOpen}
 				onClose={toggleOpen}
 				title={t?.addActivity}
@@ -51,7 +54,7 @@ export default function CreateActivity() {
 					}}
 					onCancel={toggleOpen}
 					onSubmit={mutateAsync}
-          isLoading={isLoading}
+					isLoading={isLoading}
 				/>
 			</Dialog>
 		</>

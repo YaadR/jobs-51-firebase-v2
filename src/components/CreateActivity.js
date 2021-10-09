@@ -7,6 +7,7 @@ import useCurrentUserQuery from "../hooks/auth/useCurrentUserQuery";
 import useCreateActivityMutation from "../hooks/activity/useCreateActivityMutation";
 import { useQueryClient } from "react-query";
 import constants from "../constants";
+import { AiOutlinePlus } from "react-icons/ai";
 
 export default function CreateActivity() {
 	const queryClient = useQueryClient();
@@ -27,7 +28,7 @@ export default function CreateActivity() {
 				color='primary'
 				sx={{ position: "fixed", bottom: 24 }}
 			>
-				+
+				<AiOutlinePlus size={24} />
 			</Fab>
 			<Dialog
 				dir='rtl'
@@ -40,7 +41,7 @@ export default function CreateActivity() {
 				<ActivityForm
 					defaultValues={{
 						uid: currentUser?.id,
-            type: constants.ACTIVITY_TYPES[0],
+						type: constants.ACTIVITY_TYPES[0],
 						user: {
 							avatar: currentUser?.avatar,
 							firstName: currentUser?.firstName,
@@ -50,6 +51,7 @@ export default function CreateActivity() {
 					}}
 					onCancel={toggleOpen}
 					onSubmit={mutateAsync}
+          isLoading={isLoading}
 				/>
 			</Dialog>
 		</>

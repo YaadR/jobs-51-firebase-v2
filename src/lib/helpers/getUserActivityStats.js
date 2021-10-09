@@ -1,4 +1,4 @@
-export default function getUserActivityStats(userActivities, t) {
+export default function getUserActivityStats(userActivities) {
 	const approvedArr = userActivities?.filter((v) => v?.approved);
 	const pendingArr = userActivities?.filter((v) => !v?.approved);
 
@@ -12,7 +12,7 @@ export default function getUserActivityStats(userActivities, t) {
 			: 0;
 
 	return [
-		{ label: t?.approved, value: approved },
-		{ label: t?.pending, value: pending },
+		{ label: 'approved', value: approved },
+		{ label: 'pending', value: pending },
 	];
 }

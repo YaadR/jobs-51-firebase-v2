@@ -24,7 +24,7 @@ const schema = yup
 	})
 	.required();
 
-export default function ActivityForm({ onCancel, defaultValues, onSubmit }) {
+export default function ActivityForm({ onCancel, defaultValues, onSubmit, isLoading }) {
 	const { data: currentUserRegion } = useCurrentUserQuery({
 		select: (v) => v?.region,
 	});
@@ -43,10 +43,13 @@ export default function ActivityForm({ onCancel, defaultValues, onSubmit }) {
 	const { spacing } = useTheme();
 	const { t } = useI18nContext();
 
-	console.log(errors);
 	return (
 		<>
-			<Form onCancel={onCancel} onSubmit={handleSubmit(onSubmit)}>
+			<Form
+				onCancel={onCancel}
+				isLoading={isLoading}
+				onSubmit={handleSubmit(onSubmit)}
+			>
 				<FormControl fullWidth>
 					<InputLabel id='demo-simple-select-label'>{t?.region}</InputLabel>
 					<Select
@@ -115,7 +118,7 @@ export default function ActivityForm({ onCancel, defaultValues, onSubmit }) {
 								fullWidth
 								error={!!errors?.total}
 								helperText={errors?.total?.message}
-								label={t?.total}
+								label={t?.totalHours}
 								type='number'
 								{...field}
 							/>

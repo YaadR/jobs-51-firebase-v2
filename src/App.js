@@ -13,6 +13,7 @@ import { CssBaseline } from "@mui/material";
 const queryClient = new QueryClient();
 
 function App() {
+
 	return (
 		<ThemeProvider theme={themes.light}>
 			<CssBaseline />

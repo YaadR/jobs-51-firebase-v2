@@ -6,7 +6,7 @@ export default function UserActivitiesList({ uid }) {
 	const { data } = useActivityQuery(uid);
 
 	return (
-		<List>
+		<List disablePadding>
 			{data?.map((a) => (
 				<UserActivityListItem activityId={a?.id} key={a?.id} />
 			))}

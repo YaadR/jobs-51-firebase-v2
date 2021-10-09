@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import {
 	Avatar,
 	Divider,
@@ -7,6 +8,8 @@ import {
 	ListItemText,
 	Button,
 	Typography,
+	ListItemSecondaryAction,
+	Chip,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useQueryClient } from "react-query";
@@ -41,6 +44,7 @@ export default function UserActivityListItem({ activityId }) {
 				toggleDeleting();
 			},
 		});
+	const isApproved = activity?.approved;
 
 	return (
 		<>
@@ -52,7 +56,8 @@ export default function UserActivityListItem({ activityId }) {
 					disableTypography
 					primary={
 						<Typography variant='body1'>
-							{user?.firstName} {user?.lastName} • {activity?.dateCreated}
+							{user?.firstName} {user?.lastName} •{" "}
+							{format(new Date(activity?.dateCreated), "dd/mm/yyyy")}
 						</Typography>
 					}
 					secondary={
@@ -66,6 +71,14 @@ export default function UserActivityListItem({ activityId }) {
 						</>
 					}
 				/>
+				<ListItemSecondaryAction>
+					<Chip
+						variant='outlined'
+						color={isApproved ? "primary" : "default"}
+						size='small'
+						label={isApproved ? t?.approved : t?.pending}
+					/>
+				</ListItemSecondaryAction>
 			</ListItem>
 			{getUserPermissions(currentUser) >= 1 && (
 				<Collapse in={isOpen}>
@@ -76,7 +89,7 @@ export default function UserActivityListItem({ activityId }) {
 						display='flex'
 						alignItems='center'
 					>
-						{getUserPermissions(currentUser) >= 2 && (
+						{!isApproved && getUserPermissions(currentUser) >= 2 && (
 							<Button
 								onClick={() =>
 									updateAcitivtyAsync({
@@ -94,7 +107,9 @@ export default function UserActivityListItem({ activityId }) {
 								{t?.approve}
 							</Button>
 						)}
-						<Button onClick={toggleDeleting}>{t?.deleteActivity}</Button>
+						<Button color='error' onClick={toggleDeleting}>
+							{t?.deleteActivity}
+						</Button>
 					</Box>
 				</Collapse>
 			)}

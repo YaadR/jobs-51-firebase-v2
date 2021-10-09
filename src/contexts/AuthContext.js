@@ -1,3 +1,5 @@
+import { CircularProgress } from "@mui/material";
+import { Box } from "@mui/system";
 import { useState, createContext, useEffect } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import PendingApproval from "../components/PendingApproval";
@@ -56,7 +58,18 @@ export function AuthProvider({ children }) {
 	}, [refetch]);
 
 	const render = () => {
-		if (isLoading) return "Loading...";
+		if (isLoading)
+			return (
+				<Box
+					height='100vh'
+					width='100vh'
+					display='flex'
+					alignItems='center'
+					justifyContent='center'
+				>
+					<CircularProgress color='primary' size={32} />
+				</Box>
+			);
 		if (!data) return <SignIn />;
 		if (data?.role === "pending") return <PendingApproval />;
 		return children;

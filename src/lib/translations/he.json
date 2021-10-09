@@ -363,5 +363,8 @@
 	"analytics": {
 		"updateUsersCount": "עדכון משתמשים",
 		"updateActivitiesCount": "עדכון שעות פעילות"
-	}
+	},
+	"loading": "טוען...",
+	"welcomeToAppPrimary": "Exercitation est magna aliquip ut reprehenderit esse non laborum qui est aute aliqua.",
+	"welcomeToAppSecondary": "Exercitation excepteur tempor enim magna aute."
 }

@@ -5,6 +5,7 @@ import {
 	Divider,
 	Menu,
 	MenuItem,
+	useTheme,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { NavLink } from "react-router-dom";
@@ -17,6 +18,7 @@ import { MdMenu } from "react-icons/md";
 
 export default function Layout({ children }) {
 	const { data } = useCurrentUserQuery();
+	const { palette } = useTheme();
 	const { mutateAsync: signOut } = useSignOutMutation();
 	const [elementProps, triggerProps] = useAnchorEl();
 	const { t } = useI18nContext();
@@ -49,14 +51,11 @@ export default function Layout({ children }) {
 			>
 				<Button
 					variant='outlined'
-          color='inherit'
+					color='inherit'
 					{...triggerProps}
-					sx={{ borderRadius: 32, paddingX: .5 }}
+					sx={{ borderRadius: 32, paddingX: 0.5, borderColor: palette.divider }}
 				>
-					<Avatar
-						src={data?.avatar}
-						sx={{ height: 32, width: 32,  }}
-					/>
+					<Avatar src={data?.avatar} sx={{ height: 32, width: 32 }} />
 					<Box component='span' lineHeight={0} mx={1}>
 						<MdMenu size={24} />
 					</Box>

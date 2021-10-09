@@ -1,10 +1,8 @@
 import { createTheme } from "@mui/material/styles";
 
-const baseTheme = createTheme({
+export const baseTheme = createTheme({
 	direction: "rtl",
 	palette: {
-		mode: "light",
-
 		secondary: {
 			main: "#e89c68",
 		},
@@ -82,5 +80,5 @@ const baseTheme = createTheme({
 });
 
 export const themes = {
-	light: createTheme(baseTheme, {}),
+	light: baseTheme,
 };

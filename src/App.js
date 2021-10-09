@@ -1,4 +1,3 @@
-import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import Router from "./navigation/Router";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -6,22 +5,29 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import I18nProvider from "./contexts/I18nContext";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import RTLProvider from "./contexts/RTLContext";
-import Layout from "./components/Layout";
-import { themes } from "./lib/theme";
+import { baseTheme, themes } from "./lib/theme";
 import { CssBaseline } from "@mui/material";
-import { useEffect } from "react";
-import zeroAllUserHours from "./lib/migrations/zeroAllUserHours";
+import { deepmerge } from "@mui/utils";
+import usePrefersDarkTheme from "./hooks/general/usePrefersDarkTheme";
+import { useMemo } from "react";
 
 const queryClient = new QueryClient();
 
 function App() {
-  // useEffect(() => {
-
-  //   zeroAllUserHours()
-  // }, [])
+	const prefersDarkMode = usePrefersDarkTheme();
+	const theme = useMemo(
+		() =>
+			createTheme({
+				...baseTheme,
+				palette: {
+					mode: prefersDarkMode ? "dark" : "light",
+				},
+			}),
+		[prefersDarkMode]
+	);
 
 	return (
-		<ThemeProvider theme={themes.light}>
+		<ThemeProvider theme={theme}>
 			<CssBaseline />
 			<QueryClientProvider client={queryClient}>
 				<RTLProvider>

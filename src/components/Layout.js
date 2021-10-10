@@ -15,6 +15,8 @@ import useSignOutMutation from "../hooks/auth/useSignOutMutation";
 import useAnchorEl from "../hooks/general/useAnchorEl";
 import useI18nContext from "../hooks/general/useI18nContext";
 import { MdMenu } from "react-icons/md";
+import { routes } from "../navigation/";
+import getUserPermissions from "../lib/helpers/getUserPermissions";
 
 export default function Layout({ children }) {
 	const { data } = useCurrentUserQuery();
@@ -26,18 +28,26 @@ export default function Layout({ children }) {
 	return (
 		<>
 			<Menu dir='rtl' {...elementProps}>
-				<NavLink to='/'>
-					<MenuItem>{t?.activity}</MenuItem>
-				</NavLink>
-				{[
-					constants.ROLES.ADMIN,
-					constants.ROLES.MODERATOR,
-					constants.ROLES.MANAGER,
-				]?.includes(data?.role) && (
-					<NavLink to='/admin'>
-						<MenuItem>{t?.adminPage}</MenuItem>
-					</NavLink>
-				)}
+				{routes?.map((route) => {
+					const isVisible =
+						route?.minRole <= getUserPermissions(data) && route?.isMenuOption;
+
+					return !isVisible ? null : (
+						<NavLink
+							activeStyle={{ color: palette.primary.main }}
+							exact={route?.exact}
+							to={route?.path}
+							key={route?.path}
+						>
+							<MenuItem
+								onClick={elementProps.onClose}
+							>
+								{t?.[route?.label]}
+							</MenuItem>
+						</NavLink>
+					);
+				})}
+
 				<Divider />
 				<MenuItem onClick={signOut}>{t?.signOut}</MenuItem>
 			</Menu>

@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import LoadingButton from "@mui/lab/LoadingButton";
 import {
 	Avatar,
 	Divider,
@@ -6,7 +7,6 @@ import {
 	ListItemAvatar,
 	Collapse,
 	ListItemText,
-	Button,
 	Typography,
 	ListItemSecondaryAction,
 	Chip,
@@ -90,7 +90,8 @@ export default function UserActivityListItem({ activityId }) {
 						alignItems='center'
 					>
 						{!isApproved && getUserPermissions(currentUser) >= 2 && (
-							<Button
+							<LoadingButton
+								loading={isApprovingAsync}
 								onClick={() =>
 									updateAcitivtyAsync({
 										approved: true,
@@ -105,11 +106,15 @@ export default function UserActivityListItem({ activityId }) {
 								sx={{ mx: 2 }}
 							>
 								{t?.approve}
-							</Button>
+							</LoadingButton>
 						)}
-						<Button color='error' onClick={toggleDeleting}>
+						<LoadingButton
+							loading={isDeletingAsync}
+							color='error'
+							onClick={toggleDeleting}
+						>
 							{t?.deleteActivity}
-						</Button>
+						</LoadingButton>
 					</Box>
 				</Collapse>
 			)}

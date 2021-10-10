@@ -4,7 +4,13 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import useI18nContext from "../hooks/general/useI18nContext";
 import Dialog from "./Dialog";
 
-export default function ApprovalDialog({ text,isLoading, onApprove, ...rest }) {
+export default function ApprovalDialog({
+	text,
+	isLoading,
+	primaryButtonProps,
+	onApprove,
+	...rest
+}) {
 	const { t } = useI18nContext();
 
 	return (
@@ -26,6 +32,7 @@ export default function ApprovalDialog({ text,isLoading, onApprove, ...rest }) {
 					onClick={onApprove}
 					color='primary'
 					variant='contained'
+					{...primaryButtonProps}
 				>
 					{t?.approve}
 				</LoadingButton>

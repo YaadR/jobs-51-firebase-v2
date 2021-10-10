@@ -127,6 +127,9 @@ export default function UserActivityListItem({ activityId }) {
 				text={t?.areYouSure}
 				onApprove={deleteActivityAsync}
 				isLoading={isDeletingAsync}
+				primaryButtonProps={{
+          color: 'error'
+        }}
 			/>
 		</>
 	);

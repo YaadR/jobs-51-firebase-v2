@@ -1,5 +1,6 @@
 import useSignInWithGoogleMutation from "../hooks/auth/useSignInWithGoogleMutation";
-import { Button, Container } from "@mui/material";
+import { Container } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 import { FcGoogle } from "react-icons/fc";
 import useI18nContext from "../hooks/general/useI18nContext";
 import PrimaryAndSecondaryTypography from "./PrimaryAndSecondaryTypography";
@@ -27,15 +28,15 @@ export default function SignIn() {
 					primary={t?.welcomeToAppPrimary}
 					secondary={t?.welcomeToAppSecondary}
 				/>
-				<Button
+				<LoadingButton
 					fullWidth
 					variant='outlined'
-					color='inherit'
+					color='primary'
 					onClick={mutateAsync}
 					endIcon={<FcGoogle size={24} />}
 				>
 					{t?.signInWithGoogle}
-				</Button>
+				</LoadingButton>
 			</Box>
 		</Container>
 	);

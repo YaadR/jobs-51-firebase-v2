@@ -3,6 +3,7 @@ import {
 	Button,
 	Container,
 	Divider,
+	ListItemIcon,
 	Menu,
 	MenuItem,
 	useTheme,
@@ -28,21 +29,19 @@ export default function Layout({ children }) {
 	return (
 		<>
 			<Menu dir='rtl' {...elementProps}>
-				{routes?.map((route) => {
-					const isVisible =
-						route?.minRole <= getUserPermissions(data) && route?.isMenuOption;
+				{routes?.map(({ isMenuOption, label, exact, path, icon, minRole }) => {
+					const isVisible = minRole <= getUserPermissions(data) && isMenuOption;
 
 					return !isVisible ? null : (
 						<NavLink
 							activeStyle={{ color: palette.primary.main }}
-							exact={route?.exact}
-							to={route?.path}
-							key={route?.path}
+							exact={exact}
+							to={path}
+							key={path}
 						>
-							<MenuItem
-								onClick={elementProps.onClose}
-							>
-								{t?.[route?.label]}
+							<MenuItem onClick={elementProps.onClose}>
+								<ListItemIcon style={{ minWidth: 32 }}>{icon}</ListItemIcon>
+								{t?.[label]}
 							</MenuItem>
 						</NavLink>
 					);

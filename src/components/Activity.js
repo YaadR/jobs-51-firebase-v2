@@ -6,6 +6,7 @@ import useI18nContext from "../hooks/general/useI18nContext";
 import CreateActivity from "./CreateActivity";
 import PrimaryAndSecondaryTypography from "./PrimaryAndSecondaryTypography";
 import UserActivitiesList from "./UserActivitiesList";
+import UserBadges from "./UserBadges";
 import UserHeader from "./UserHeader";
 import UserStats from "./UserStats";
 
@@ -17,6 +18,8 @@ export default function Activity() {
 	return (
 		<>
 			<UserHeader uid={currentUserId} />
+			<UserBadges uid={currentUserId} />
+			<Divider sx={{ my: 4 }} />
 			<UserStats uid={currentUserId} />
 			<Divider sx={{ my: 4 }} />
 			<UserActivitiesList uid={currentUserId} />

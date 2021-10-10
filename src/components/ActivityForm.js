@@ -71,7 +71,7 @@ export default function ActivityForm({
 							</MenuItem>
 						))}
 					</Select>
-          <FormHelperText>{t?.regionChangeAdmin}</FormHelperText>
+					<FormHelperText>{t?.regionChangeAdmin}</FormHelperText>
 				</FormControl>
 
 				<br />
@@ -135,6 +135,7 @@ export default function ActivityForm({
 					name='date'
 					render={({ field }) => (
 						<TextField
+							fullWidth
 							error={!!errors?.date}
 							helperText={errors?.date?.message}
 							label={t?.date}

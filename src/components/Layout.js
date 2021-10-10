@@ -21,7 +21,7 @@ import getUserPermissions from "../lib/helpers/getUserPermissions";
 
 export default function Layout({ children }) {
 	const { data } = useCurrentUserQuery();
-	const { palette } = useTheme();
+	const { zIndex, palette } = useTheme();
 	const { mutateAsync: signOut } = useSignOutMutation();
 	const [elementProps, triggerProps] = useAnchorEl();
 	const { t } = useI18nContext();
@@ -29,23 +29,28 @@ export default function Layout({ children }) {
 	return (
 		<>
 			<Menu dir='rtl' {...elementProps}>
-				{routes?.map(({ isMenuOption, label, exact, path, icon, minRole }) => {
-					const isVisible = minRole <= getUserPermissions(data) && isMenuOption;
+				{routes?.map(
+					({ isMenuOption, label, exact, path, icon: Icon, minRole }) => {
+						const isVisible =
+							minRole <= getUserPermissions(data) && isMenuOption;
 
-					return !isVisible ? null : (
-						<NavLink
-							activeStyle={{ color: palette.primary.main }}
-							exact={exact}
-							to={path}
-							key={path}
-						>
-							<MenuItem onClick={elementProps.onClose}>
-								<ListItemIcon style={{ minWidth: 32 }}>{icon}</ListItemIcon>
-								{t?.[label]}
-							</MenuItem>
-						</NavLink>
-					);
-				})}
+						return !isVisible ? null : (
+							<NavLink
+								activeStyle={{ color: palette.primary.main }}
+								exact={exact}
+								to={path}
+								key={path}
+							>
+								<MenuItem onClick={elementProps.onClose}>
+									<ListItemIcon style={{ minWidth: 32 }}>
+										<Icon color='inherit' />
+									</ListItemIcon>
+									{t?.[label]}
+								</MenuItem>
+							</NavLink>
+						);
+					}
+				)}
 
 				<Divider />
 				<MenuItem onClick={signOut}>{t?.signOut}</MenuItem>
@@ -57,12 +62,18 @@ export default function Layout({ children }) {
 				justifyContent='flex-end'
 				position='sticky'
 				top={0}
+        zIndex={zIndex.appBar}
 			>
 				<Button
 					variant='outlined'
 					color='inherit'
 					{...triggerProps}
-					sx={{ borderRadius: 32, paddingX: 0.5, borderColor: palette.divider }}
+					sx={{
+						borderRadius: 32,
+						paddingX: 0.5,
+						borderColor: palette.divider,
+						backgroundColor: palette.background.paper,
+					}}
 				>
 					<Avatar src={data?.avatar} sx={{ height: 32, width: 32 }} />
 					<Box component='span' lineHeight={0} mx={1}>

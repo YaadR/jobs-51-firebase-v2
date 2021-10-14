@@ -2,6 +2,8 @@ import { CircularProgress } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState, createContext, useEffect } from "react";
 import { useQuery, useQueryClient } from "react-query";
+import FullScreenSpinner from "../components/FullScreenSpinner";
+import OnBoarding from "../components/OnBoarding";
 import PendingApproval from "../components/PendingApproval";
 import SignIn from "../components/SignIn";
 import { auth, db } from "../firebase";
@@ -58,20 +60,10 @@ export function AuthProvider({ children }) {
 	}, [refetch]);
 
 	const render = () => {
-		if (isLoading)
-			return (
-				<Box
-					height='100vh'
-					width='100vw'
-					display='flex'
-					alignItems='center'
-					justifyContent='center'
-				>
-					<CircularProgress color='primary' size={32} />
-				</Box>
-			);
+		if (isLoading) return <FullScreenSpinner />;
 		if (!data) return <SignIn />;
 		if (data?.role === "pending") return <PendingApproval />;
+		if (!data?.displayName || !data?.region) return <OnBoarding />;
 		return children;
 	};
 	return <AuthContext.Provider>{render()}</AuthContext.Provider>;

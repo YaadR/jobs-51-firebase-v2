@@ -1,6 +1,7 @@
-import { CircularProgress, Button } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import { Button } from "@mui/material";
 import { Box } from "@mui/system";
-import useI18nContext from "../hooks/general/useI18nContext";
+import useI18nContext from "../../hooks/general/useI18nContext";
 
 export default function Form({
 	buttonLabel,
@@ -23,18 +24,15 @@ export default function Form({
 				>
 					{t?.cancel}
 				</Button>
-				<Button
+				<LoadingButton
 					disabled={isLoading}
 					variant='contained'
 					color='primary'
 					type='submit'
+					loading={isLoading}
 				>
-					{isLoading ? (
-						<CircularProgress size={24} color='inherit' />
-					) : (
-						`${buttonLabel || t?.submit}`
-					)}
-				</Button>
+					{buttonLabel ?? t?.submit}
+				</LoadingButton>
 			</Box>
 		</form>
 	);

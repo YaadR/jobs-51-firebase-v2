@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { NavLink } from "react-router-dom";
-import constants from "../constants";
 import useCurrentUserQuery from "../hooks/auth/useCurrentUserQuery";
 import useSignOutMutation from "../hooks/auth/useSignOutMutation";
 import useAnchorEl from "../hooks/general/useAnchorEl";

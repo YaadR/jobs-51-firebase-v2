@@ -13,9 +13,11 @@ import constants from "../constants";
 import useCurrentUserQuery from "../hooks/auth/useCurrentUserQuery";
 import useUpdateCurrentUserMutation from "../hooks/auth/useUpdateCurrentUserMutation";
 import useI18nContext from "../hooks/general/useI18nContext";
-import Form from "./Form";
+import Form from "./form/Form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import FormSelectField from "./form/FormSelectField";
+import FormTextField from "./form/FormTextField";
 
 const schema = yup
 	.object({
@@ -75,44 +77,21 @@ export default function ActivityForm({
 				</FormControl>
 
 				<br />
-				<Controller
-					control={control}
+				<FormSelectField
 					name='type'
-					render={({ field }) => (
-						<FormControl fullWidth>
-							<InputLabel id='demo-simple-select-label-1'>
-								{t?.activityType}
-							</InputLabel>
-							<Select
-								labelId='demo-simple-select-label-1'
-								id='demo-simple-select-1'
-								label={t?.activityType}
-								{...field}
-							>
-								{constants.ACTIVITY_TYPES?.map((region) => (
-									<MenuItem dir='rtl' value={region}>
-										{region}
-									</MenuItem>
-								))}
-							</Select>
-						</FormControl>
-					)}
+					options={constants.ACTIVITY_TYPES}
+					control={control}
 				/>
-				<Controller
+				<FormTextField
 					control={control}
 					name='description'
-					render={({ field }) => (
-						<TextField
-							label={t?.description}
-							fullWidth
-							multiline
-							rows={4}
-							error={!!errors?.description}
-							helperText={errors?.description?.message}
-							label={t?.description}
-							{...field}
-						/>
-					)}
+					label={t?.description}
+					fullWidth
+					multiline
+					rows={4}
+					error={!!errors?.description}
+					helperText={errors?.description?.message}
+					label={t?.description}
 				/>
 				<Controller
 					control={control}

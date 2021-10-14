@@ -19,7 +19,11 @@ export default function AdminListFilters({ options }) {
 								}}
 								{...option}
 								isSelected={isSelected}
-								// onDelete={() => null}
+								onDelete={
+									!!query?.[option?.label]
+										? () => updateQuery({ [option?.label]: null })
+										: null
+								}
 								key={option?.label}
 							/>
 						</Grid>

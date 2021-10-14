@@ -3,6 +3,7 @@ import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import constants from "../constants";
 import { AdminUsersProvider } from "../contexts/AdminUsersContext";
+import useI18nContext from "../hooks/general/useI18nContext";
 import AdminListFilters from "./AdminListFilters";
 
 export default function AdminManageUsers() {
@@ -15,6 +16,7 @@ export default function AdminManageUsers() {
 
 function AdminManageUsersComponent() {
 	const { zIndex, palette, spacing } = useTheme();
+	const { t } = useI18nContext();
 
 	return (
 		<>
@@ -22,33 +24,34 @@ function AdminManageUsersComponent() {
 				sx={{
 					position: "sticky",
 					top: spacing(1),
-          paddingBottom: spacing(1),
+					paddingBottom: spacing(1),
 					zIndex: zIndex.appBar,
 					backgroundColor: palette.background.paper,
-          borderBottom: `1px solid ${palette.divider}`
+					borderBottom: `1px solid ${palette.divider}`,
 				}}
 			>
 				<Typography variant='h3' gutterBottom>
-					Admin Manage Users
+					{t?.manageUsers}
 				</Typography>
-				<AdminListFilters options={options} />
+				<AdminListFilters
+					options={[
+						{
+							label: t?.fullName,
+              isSearchable: true,
+							options: ["Alon Zuman", "Nir Peleg"],
+						},
+						{
+							label: t?.region,
+							options: constants.REGIONS,
+						},
+						{
+							label: t?.role,
+							options: Object.values(constants.ROLES),
+						},
+					]}
+				/>
 			</Box>
 			<div style={{ height: 4000 }} />
 		</>
 	);
 }
-
-const options = [
-	{
-		label: "fullName",
-		options: ["Alon Zuman", "Nir Peleg"],
-	},
-	{
-		label: "region",
-		options: constants.REGIONS,
-	},
-	{
-		label: "role",
-		options: Object.values(constants.ROLES),
-	},
-];

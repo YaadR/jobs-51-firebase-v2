@@ -48,7 +48,19 @@ export default function UserActivityListItem({ activityId }) {
 
 	return (
 		<>
-			<ListItem onClick={toggleOpen} button>
+			<ListItem
+				onClick={toggleOpen}
+				button
+				alignItems='flex-start'
+				secondaryAction={
+					<Chip
+						variant='outlined'
+						color={isApproved ? "primary" : "default"}
+						size='small'
+						label={isApproved ? t?.approved : t?.pending}
+					/>
+				}
+			>
 				<ListItemAvatar>
 					<Avatar src={user?.avatar} />
 				</ListItemAvatar>
@@ -71,14 +83,6 @@ export default function UserActivityListItem({ activityId }) {
 						</>
 					}
 				/>
-				<ListItemSecondaryAction>
-					<Chip
-						variant='outlined'
-						color={isApproved ? "primary" : "default"}
-						size='small'
-						label={isApproved ? t?.approved : t?.pending}
-					/>
-				</ListItemSecondaryAction>
 			</ListItem>
 			{getUserPermissions(currentUser) >= 1 && (
 				<Collapse in={isOpen}>
@@ -128,8 +132,8 @@ export default function UserActivityListItem({ activityId }) {
 				onApprove={deleteActivityAsync}
 				isLoading={isDeletingAsync}
 				primaryButtonProps={{
-          color: 'error'
-        }}
+					color: "error",
+				}}
 			/>
 		</>
 	);

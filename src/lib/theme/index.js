@@ -76,6 +76,12 @@ export const baseTheme = createTheme({
 				},
 			},
 		},
+
+		MuiContainer: {
+			defaultProps: {
+				style: { paddingBottom: 96 },
+			},
+		},
 	},
 });
 

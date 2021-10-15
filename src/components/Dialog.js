@@ -10,7 +10,7 @@ import { RiCloseFill } from "react-icons/ri";
 export default function Dialog({ children, title, ...rest }) {
 	const { spacing } = useTheme();
 	return (
-		<MDialog PaperProps={{ style: { position: "relative" } }} {...rest}>
+		<MDialog dir='rtl' PaperProps={{ style: { position: "relative" } }} {...rest}>
 			<DialogTitle>{title}</DialogTitle>
 			<IconButton
 				onClick={rest?.onClose}

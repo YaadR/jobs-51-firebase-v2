@@ -1,10 +1,14 @@
 import { useTheme } from "@emotion/react";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import constants from "../constants";
 import { AdminUsersProvider } from "../contexts/AdminUsersContext";
 import useI18nContext from "../hooks/general/useI18nContext";
-import AdminListFilters from "./AdminListFilters";
+import useAdminUsersContext from "../hooks/general/useAdminUsersContext";
+import Dialog from "./Dialog";
+import Section from "./Section";
+import AdminManageUsersFiltersForm from "./AdminManageUsersFiltersForm";
+import UsersList from "./UsersList";
 
 export default function AdminManageUsers() {
 	return (
@@ -15,6 +19,7 @@ export default function AdminManageUsers() {
 }
 
 function AdminManageUsersComponent() {
+	const { query, toggleOpen, isOpen, updateQuery } = useAdminUsersContext();
 	const { zIndex, palette, spacing } = useTheme();
 	const { t } = useI18nContext();
 
@@ -33,25 +38,27 @@ function AdminManageUsersComponent() {
 				<Typography variant='h3' gutterBottom>
 					{t?.manageUsers}
 				</Typography>
-				<AdminListFilters
-					options={[
-						{
-							label: t?.fullName,
-              isSearchable: true,
-							options: ["Alon Zuman", "Nir Peleg"],
-						},
-						{
-							label: t?.region,
-							options: constants.REGIONS,
-						},
-						{
-							label: t?.role,
-							options: Object.values(constants.ROLES),
-						},
-					]}
-				/>
+				<Button onClick={toggleOpen} variant='outlined'>
+					{t?.filterResults}
+				</Button>
 			</Box>
-			<div style={{ height: 4000 }} />
+			<UsersList query={query} />
+			<Dialog
+				open={isOpen}
+				onClose={toggleOpen}
+				title={t?.filterResults}
+				maxWidth='lg'
+				fullWidth
+			>
+				<AdminManageUsersFiltersForm
+					defaultValues={query}
+					onCancel={toggleOpen}
+					onSubmit={(v) => {
+						updateQuery(v);
+						toggleOpen();
+					}}
+				/>
+			</Dialog>
 		</>
 	);
 }

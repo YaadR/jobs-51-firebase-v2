@@ -9,6 +9,7 @@ import UserActivityListItem from "./UserActivityListItem";
 export default function ActivitiesList() {
 	const { data, isLoading, refetch, isFetching } = useAdminActivitiesContext();
 	const { t } = useI18nContext();
+	const isEmpty = !isLoading && data?.length === 0;
 
 	return (
 		<>
@@ -18,20 +19,20 @@ export default function ActivitiesList() {
 						<CircularProgress size={24} />
 					</Box>
 				)}
-				{!isLoading && data?.length === 0 && (
-					<EmptyState primary={t?.usersEmptyStateContainer} />
-				)}
+				{isEmpty && <EmptyState primary={t?.usersEmptyStateContainer} />}
 				{!isLoading &&
 					data?.length > 0 &&
 					data?.map((doc) => (
 						<UserActivityListItem activityId={doc?.id} key={doc?.id} />
 					))}
 			</List>
-			<Box py={2} display='flex' justifyContent='center'>
-				<LoadingButton loading={isFetching} onClick={refetch}>
-					{t?.loadMore}
-				</LoadingButton>
-			</Box>
+			{!isEmpty && (
+				<Box py={2} display='flex' justifyContent='center'>
+					<LoadingButton loading={isFetching} onClick={refetch}>
+						{t?.loadMore}
+					</LoadingButton>
+				</Box>
+			)}
 		</>
 	);
 }

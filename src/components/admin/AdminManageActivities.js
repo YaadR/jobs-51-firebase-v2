@@ -68,6 +68,7 @@ function AdminManageActivitiesComponent() {
 				<AdminManageActivitiesFiltersForm
 					defaultValues={{
 						region: currentUserRegion,
+            status: 'all',
 						...query,
 					}}
 					onCancel={toggleOpen}

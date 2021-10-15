@@ -27,11 +27,13 @@ const firebaseConfigDevelopment = {
 };
 
 if (firebase.apps.length === 0) {
+	// firebase.initializeApp(firebaseConfigProduction);
+
 	firebase.initializeApp(
 		process.env.NODE_END === "production"
 			? firebaseConfigProduction
 			: firebaseConfigDevelopment
-	// firebase.initializeApp(firebaseConfigProduction);
+	);
 }
 
 export const db = firebase.firestore();

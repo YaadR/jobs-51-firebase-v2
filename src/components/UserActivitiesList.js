@@ -1,6 +1,6 @@
 import { Skeleton, Typography } from "@mui/material";
 import List from "@mui/material/List";
-import useActivityQuery from "../hooks/activity/useActivitiesQuery";
+import useActivityQuery from "../hooks/activity/useUserActivitiesQuery";
 import useCurrentUserQuery from "../hooks/auth/useCurrentUserQuery";
 import useI18nContext from "../hooks/general/useI18nContext";
 import useUserQuery from "../hooks/users/useUserQuery";

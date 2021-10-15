@@ -1,7 +1,7 @@
 import { useTheme } from "@emotion/react";
 import { ListItem, ListItemIcon, ListItemText, Skeleton } from "@mui/material";
 import { Box } from "@mui/system";
-import useActivitiesQuery from "../hooks/activity/useActivitiesQuery";
+import useUserActivitiesQuery from "../hooks/activity/useUserActivitiesQuery";
 import useI18nContext from "../hooks/general/useI18nContext";
 import useUserQuery from "../hooks/users/useUserQuery";
 import getUserActivityStats from "../lib/helpers/getUserActivityStats";
@@ -12,7 +12,7 @@ export default function UserStats({ uid }) {
 	const { data: user } = useUserQuery(uid);
 	const { palette } = useTheme();
 	const { t } = useI18nContext();
-	const { data: activities } = useActivitiesQuery(uid);
+	const { data: activities } = useUserActivitiesQuery(uid);
 
 	return (
 		<>

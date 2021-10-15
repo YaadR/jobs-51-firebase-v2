@@ -40,7 +40,7 @@ const Logo = ({ height = 134, width = 279 }) => {
 						fontFamily='Assistant-SemiBold, Assistant'
 						fontSize='24'
 						fontWeight='500'
-						fill={theme.palette.secondary.main}
+						fill={theme.palette.text.primary}
 					>
 						<tspan x='110' y='129'>
 							עמותת

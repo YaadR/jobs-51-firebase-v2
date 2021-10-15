@@ -30,6 +30,11 @@ function AdminManageUsersComponent() {
 
 	return (
 		<>
+			<BackButton />
+			<PrimaryAndSecondaryTypography
+				primary={t?.manageUsers}
+				primaryProps={{ variant: "h3", style: { margin: 0 } }}
+			/>
 			<Box
 				sx={{
 					position: "sticky",
@@ -41,11 +46,6 @@ function AdminManageUsersComponent() {
 					borderBottom: `1px solid ${palette.divider}`,
 				}}
 			>
-				<BackButton />
-				<PrimaryAndSecondaryTypography
-					primary={t?.manageUsers}
-					primaryProps={{ variant: "h3", style: { margin: 0 } }}
-				/>
 				<Button
 					startIcon={<GoSettings size={16} />}
 					onClick={toggleOpen}
@@ -59,7 +59,7 @@ function AdminManageUsersComponent() {
 				open={isOpen}
 				onClose={toggleOpen}
 				title={t?.filterResults}
-				maxWidth='lg'
+				maxWidth='xs'
 				fullWidth
 			>
 				<AdminManageUsersFiltersForm

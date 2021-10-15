@@ -1,22 +1,41 @@
 import { useQuery, useQueryClient } from "react-query";
-import { auth, db } from "../../firebase";
+import { Activity } from "../../lib/API/models";
+import useI18nContext from "../general/useI18nContext";
 
-export default function useActivitiesQuery(uid = "") {
+export default function useActivitiesQuery(query, options) {
 	const queryClient = useQueryClient();
-	const userId = uid || auth.currentUser.uid;
-	return useQuery(["user-activities", userId], async () => {
-		const snapshot = await db
-			.collection("activities")
-			.where("uid", "==", userId)
-      .orderBy('dateCreated', 'desc')
-			.get();
+	const { t } = useI18nContext();
 
-		const data = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
-		data?.forEach((activity) =>
-			queryClient.setQueryData(["user-activity", activity?.id], activity)
-		);
-		return data;
-	}, {
-    refetchOnWindowFocus: false,
-  });
+	const hookRef = useQuery(
+		["activities", query],
+		async () => {
+			let queryRef = Activity;
+
+			if (query?.status === "pending") {
+				queryRef = queryRef.where("approved", "==", false);
+			}
+
+			if (query?.status === "approved") {
+				queryRef = queryRef.where("approved", "==", true);
+			}
+
+			if (!!query?.region && query?.region !== t?.all) {
+				queryRef = queryRef.where("region", "==", query?.region);
+			}
+
+			const data = await queryRef
+				// .limit(10)
+				.get()
+				.then((s) => s.docs.map((d) => ({ id: d.id, ...d.data() })));
+
+			data?.forEach((doc) =>
+				queryClient.setQueryData(["user-activity", doc.id], doc)
+			);
+
+			return data;
+		},
+		options
+	);
+
+	return { ...hookRef };
 }

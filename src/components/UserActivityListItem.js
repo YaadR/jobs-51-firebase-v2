@@ -10,6 +10,7 @@ import {
 	Typography,
 	ListItemSecondaryAction,
 	Chip,
+	Skeleton,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useQueryClient } from "react-query";
@@ -25,8 +26,8 @@ import ApprovalDialog from "./ApprovalDialog";
 
 export default function UserActivityListItem({ activityId }) {
 	const queryClient = useQueryClient();
-	const { data: activity } = useActivityQuery(activityId);
-	const { data: user } = useUserQuery(activity?.uid);
+	const { data: activity, isLoadingActivity } = useActivityQuery(activityId);
+	const { data: user, isLoadingUser } = useUserQuery(activity?.uid);
 	const [isOpen, toggleOpen] = useToggle(false);
 	const { t } = useI18nContext();
 	const { data: currentUser } = useCurrentUserQuery();
@@ -45,32 +46,51 @@ export default function UserActivityListItem({ activityId }) {
 			},
 		});
 	const isApproved = activity?.approved;
-	const activityDate = format(new Date(activity?.dateCreated), "dd/MM/yyyy");
+	const activityDate = activity?.dateCreated
+		? format(new Date(activity?.dateCreated), "dd/MM/yyyy")
+		: null;
+	const isLoading = isLoadingUser || isLoadingActivity || !user || !activity;
 
 	return (
 		<>
 			<ListItem onClick={toggleOpen} button alignItems='flex-start'>
 				<ListItemAvatar>
-					<Avatar src={user?.avatar} />
+					{isLoading ? (
+						<Skeleton variant='circular' height={40} width={40} />
+					) : (
+						<Avatar src={user?.avatar} />
+					)}
 				</ListItemAvatar>
 				<ListItemText
 					primaryTypographyProps={{ noWrap: true }}
-					primary={`${user?.displayName} • ${activityDate}`}
+					primary={
+						isLoading ? (
+							<Skeleton variant='text' height={24} width={80} />
+						) : (
+							`${user?.displayName} • ${activityDate}`
+						)
+					}
 					secondaryTypographyProps={{ noWrap: !isOpen }}
 					secondary={
-						<>
-							{activity?.total} {t?.hours}, {activity?.type} <br />
-							{activity?.description}
-						</>
+						isLoading ? (
+							<Skeleton variant='text' height={24} width={120} />
+						) : (
+							<>
+								{activity?.total} {t?.hours}, {activity?.type} <br />
+								{activity?.description}
+							</>
+						)
 					}
 				/>
-				<Chip
-					sx={{ mt: 1 }}
-					variant='outlined'
-					color={isApproved ? "primary" : "default"}
-					size='small'
-					label={isApproved ? t?.approved : t?.pending}
-				/>
+				{!isLoading && (
+					<Chip
+						sx={{ mt: 1 }}
+						variant='outlined'
+						color={isApproved ? "primary" : "default"}
+						size='small'
+						label={isApproved ? t?.approved : t?.pending}
+					/>
+				)}
 			</ListItem>
 			{getUserPermissions(currentUser) >= 1 && (
 				<Collapse in={isOpen}>

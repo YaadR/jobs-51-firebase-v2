@@ -1,16 +1,23 @@
-const functions = require("firebase-functions");
+// const functions = require("firebase-functions");
+// const admin = require("firebase-admin");
+// admin.initializeApp();
+// const db = admin.firestore();
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-exports.helloWorld = functions.https.onRequest((request, response) => {
-  functions.logger.info("Hello logs!", {structuredData: true});
-  response.send("Hello from Firebase!");
-});
+// // // Create and Deploy Your First Cloud Functions
+// // // https://firebase.google.com/docs/functions/write-firebase-functions
+// //
 
-exports.scheduledFunction = functions.pubsub
-	.schedule("every 15 seconds")
-	.onRun((context) => {
-		console.log("This will be run every 5 minutes!");
-		return null;
-	});
+// exports.sumActivitiesByRegion = functions.firestore
+// 	.document("activities/{docId}")
+// 	.onWrite(async (change, context) => {
+// 		const statsRef = await db
+// 			.collection("stats")
+// 			.doc("activities")
+// 			.get()
+// 			.then((d) => ({ id: d.id, ...d.data() }));
+// 		console.log(statsRef);
+
+// 		console.log(change, context);
+
+// 		return null;
+// 	});

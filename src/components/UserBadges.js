@@ -1,14 +1,11 @@
 import { Chip, Grid } from "@mui/material";
-import { Box } from "@mui/system";
-import useCurrentUserQuery from "../hooks/auth/useCurrentUserQuery";
 import useI18nContext from "../hooks/general/useI18nContext";
+import useUserQuery from "../hooks/users/useUserQuery";
 
 export default function UserBadges({ uid }) {
-	const { data } = useCurrentUserQuery(uid);
+	const { data } = useUserQuery(uid);
 	const { t } = useI18nContext();
 	const isVolunteer = data?.volunteer;
-
-	// if (!data) return <Box height={32} />;
 
 	return (
 		<Grid container spacing={1}>

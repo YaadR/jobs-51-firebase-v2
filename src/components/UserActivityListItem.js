@@ -45,43 +45,31 @@ export default function UserActivityListItem({ activityId }) {
 			},
 		});
 	const isApproved = activity?.approved;
+	const activityDate = format(new Date(activity?.dateCreated), "dd/MM/yyyy");
 
 	return (
 		<>
-			<ListItem
-				onClick={toggleOpen}
-				button
-				alignItems='flex-start'
-				secondaryAction={
-					<Chip
-						variant='outlined'
-						color={isApproved ? "primary" : "default"}
-						size='small'
-						label={isApproved ? t?.approved : t?.pending}
-					/>
-				}
-			>
+			<ListItem onClick={toggleOpen} button alignItems='flex-start'>
 				<ListItemAvatar>
 					<Avatar src={user?.avatar} />
 				</ListItemAvatar>
 				<ListItemText
-					disableTypography
-					primary={
-						<Typography variant='body1'>
-							{user?.firstName} {user?.lastName} •{" "}
-							{format(new Date(activity?.dateCreated), "dd/mm/yyyy")}
-						</Typography>
-					}
+					primaryTypographyProps={{ noWrap: true }}
+					primary={`${user?.displayName} • ${activityDate}`}
+					secondaryTypographyProps={{ noWrap: !isOpen }}
 					secondary={
 						<>
-							<Typography variant='body1' color='text.secondary'>
-								{activity?.total} {t?.hours}, {activity?.type} <br />
-							</Typography>
-							<Typography variant='body2' color='text.secondary'>
-								{activity?.description}
-							</Typography>
+							{activity?.total} {t?.hours}, {activity?.type} <br />
+							{activity?.description}
 						</>
 					}
+				/>
+				<Chip
+					sx={{ mt: 1 }}
+					variant='outlined'
+					color={isApproved ? "primary" : "default"}
+					size='small'
+					label={isApproved ? t?.approved : t?.pending}
 				/>
 			</ListItem>
 			{getUserPermissions(currentUser) >= 1 && (

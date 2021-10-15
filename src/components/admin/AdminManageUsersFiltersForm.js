@@ -1,21 +1,31 @@
 import { Controller, useForm } from "react-hook-form";
-import useI18nContext from "../hooks/general/useI18nContext";
-import Form from "./form/Form";
-import Section from "./Section";
-import useUsersQuery from "../hooks/users/useUsersQuery";
-import FormSelectField from "./form/FormSelectField";
+import useI18nContext from "../../hooks/general/useI18nContext";
+import Form from "../form/Form";
+import Section from "../Section";
+import useUsersQuery from "../../hooks/users/useUsersQuery";
+import FormSelectField from "../form/FormSelectField";
 import { Autocomplete, TextField } from "@mui/material";
-import constants from "../constants";
+import constants from "../../constants";
 
-export default function AdminManageUsersFiltersForm({ onCancel, onSubmit, defaultValues }) {
-	const { handleSubmit, control } = useForm({
+export default function AdminManageUsersFiltersForm({
+	onCancel,
+	onSubmit,
+	defaultValues,
+}) {
+	const { handleSubmit, control, watch } = useForm({
 		defaultValues,
 	});
 	const { t } = useI18nContext();
 	const { data: users } = useUsersQuery();
+	const regionSelected = watch("region");
 
 	const usersDisplayNames = users
 		?.filter((u) => !!u?.displayName)
+		?.filter((u) =>
+			regionSelected && regionSelected !== t?.all
+				? u?.region === regionSelected
+				: u
+		)
 		?.map((u) => ({
 			label: u?.displayName,
 			value: u?.displayName,
@@ -34,6 +44,9 @@ export default function AdminManageUsersFiltersForm({ onCancel, onSubmit, defaul
 						name='displayName'
 						render={({ field }) => (
 							<Autocomplete
+								value={usersDisplayNames?.find(
+									(v) => v?.value === field?.value
+								)}
 								onChange={(e, v) => field.onChange(v?.value)}
 								disablePortal
 								getOptionLabel={(o) => o?.label}
@@ -51,7 +64,7 @@ export default function AdminManageUsersFiltersForm({ onCancel, onSubmit, defaul
 						name='region'
 						label={t?.region}
 						control={control}
-						options={constants.REGIONS}
+						options={[t?.all, ...constants.REGIONS]}
 						margin='none'
 					/>
 				</Section>

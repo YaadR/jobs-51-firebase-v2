@@ -1,12 +1,12 @@
 import Activity from "../components/Activity";
-import Admin from "../components/Admin";
+import Admin from "../components/admin/Admin";
 import Settings from "../components/Settings";
 import User from "../components/User";
 import { BsLightningChargeFill } from "react-icons/bs";
 import { FaCog } from "react-icons/fa";
 import { ImStatsBars } from "react-icons/im";
-import AdminManageActivities from "../components/AdminManageActivities";
-import AdminManageUsers from "../components/AdminManageUsers";
+import AdminManageActivities from "../components/admin/AdminManageActivities";
+import AdminManageUsers from "../components/admin/AdminManageUsers";
 
 export const routes = [
 	{

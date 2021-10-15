@@ -10,7 +10,7 @@ export default function User() {
 
 	return (
 		<>
-			<UserHeader uid={uid} />
+			<UserHeader backButton uid={uid} />
 			<UserBadges uid={uid} />
 			<Divider sx={{ my: 4 }} />
 			<UserStats uid={uid} />

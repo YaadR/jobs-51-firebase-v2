@@ -11,6 +11,11 @@ export default function useUserQuery(uid, options) {
 				.get()
 				.then((d) => ({ id: d.id, ...d.data() }));
 		},
-		options
+		{
+			refetchOnMount: false,
+			refetchOnReconnect: false,
+			refetchOnWindowFocus: false,
+			...options,
+		}
 	);
 }

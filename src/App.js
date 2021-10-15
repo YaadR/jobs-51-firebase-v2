@@ -7,7 +7,6 @@ import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import RTLProvider from "./contexts/RTLContext";
 import { baseTheme, themes } from "./lib/theme";
 import { CssBaseline } from "@mui/material";
-import { deepmerge } from "@mui/utils";
 import usePrefersDarkTheme from "./hooks/general/usePrefersDarkTheme";
 import { useMemo } from "react";
 

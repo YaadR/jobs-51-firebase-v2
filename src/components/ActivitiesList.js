@@ -1,14 +1,13 @@
 import { CircularProgress, List } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { Box } from "@mui/system";
-import useActivitiesQuery from "../hooks/activity/useActivitiesQuery";
 import useAdminActivitiesContext from "../hooks/general/useAdminActivitiesContext";
 import useI18nContext from "../hooks/general/useI18nContext";
 import EmptyState from "./EmptyState";
 import UserActivityListItem from "./UserActivityListItem";
 
-export default function ActivitiesList({ query }) {
-	const { data, isLoading, fetchMore } = useActivitiesQuery(query);
+export default function ActivitiesList() {
+	const { data, isLoading, refetch, isFetching } = useAdminActivitiesContext();
 	const { t } = useI18nContext();
 
 	return (
@@ -28,9 +27,11 @@ export default function ActivitiesList({ query }) {
 						<UserActivityListItem activityId={doc?.id} key={doc?.id} />
 					))}
 			</List>
-			{/* <Box py={2} display='flex' justifyContent='center'>
-				<LoadingButton onClick={() => fetchMore()}>{t?.loadMore}</LoadingButton>
-			</Box> */}
+			<Box py={2} display='flex' justifyContent='center'>
+				<LoadingButton loading={isFetching} onClick={refetch}>
+					{t?.loadMore}
+				</LoadingButton>
+			</Box>
 		</>
 	);
 }

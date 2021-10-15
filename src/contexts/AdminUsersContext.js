@@ -1,4 +1,4 @@
-import { useState, createContext } from "react";
+import { createContext } from "react";
 import { useHistory } from "react-router-dom";
 import useToggle from "../hooks/general/useToggle";
 import qs from "query-string";
@@ -10,7 +10,6 @@ export const AdminUsersProvider = ({ children }) => {
 	const { replace, pathname, location } = useHistory();
 	const query = qs.parse(location.search);
 
-	console.log(location.search);
 	const updateQuery = (updater) => {
 		replace({
 			pathname,

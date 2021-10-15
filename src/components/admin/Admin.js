@@ -20,13 +20,13 @@ export default function Admin() {
 				primary={t?.adminPage}
 			/>
 			<List>
-				<ListItemButton onClick={() => push("/admin/users")}>
+				<ListItemButton divider onClick={() => push("/admin/users")}>
 					<ListItemIcon>
 						<BsPeopleFill />
 					</ListItemIcon>
 					<ListItemText primary={t?.manageUsers} />
 				</ListItemButton>
-				<ListItemButton onClick={() => push("/admin/activities")}>
+				<ListItemButton divider onClick={() => push("/admin/activities")}>
 					<ListItemIcon>
 						<BsLightningChargeFill />
 					</ListItemIcon>

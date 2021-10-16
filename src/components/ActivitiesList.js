@@ -13,7 +13,7 @@ export default function ActivitiesList() {
 
 	return (
 		<>
-			<List>
+			<List disablePadding>
 				{isLoading && (
 					<Box py={4} display='flex' justifyContent='center'>
 						<CircularProgress size={24} />

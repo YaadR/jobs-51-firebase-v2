@@ -34,6 +34,7 @@ function AdminManageUsersComponent() {
 			<PrimaryAndSecondaryTypography
 				primary={t?.manageUsers}
 				primaryProps={{ variant: "h3", style: { margin: 0 } }}
+				containerProps={{ py: 1 }}
 			/>
 			<Box
 				sx={{

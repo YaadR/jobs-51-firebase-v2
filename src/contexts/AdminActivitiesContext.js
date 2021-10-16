@@ -9,6 +9,7 @@ export const AdminActivitiesContext = createContext();
 
 export const AdminActivitiesProvider = ({ children }) => {
 	const queryClient = useQueryClient();
+  // const [hasMoreResults, setHasMoreResults] = useState(false)
 	const [lastResult, setLastResult] = useState(null);
 	const [isOpen, toggleOpen] = useToggle();
 	const { replace, pathname, location } = useHistory();

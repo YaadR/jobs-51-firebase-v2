@@ -4,8 +4,6 @@ import { Box } from "@mui/system";
 import { AdminActivitiesProvider } from "../../contexts/AdminActivitiesContext";
 import useI18nContext from "../../hooks/general/useI18nContext";
 import Dialog from "../Dialog";
-import AdminManageUsersFiltersForm from "./AdminManageUsersFiltersForm";
-import UsersList from "../UsersList";
 import BackButton from "../BackButton";
 import useCurrentUserQuery from "../../hooks/auth/useCurrentUserQuery";
 import { GoSettings } from "react-icons/go";
@@ -37,6 +35,7 @@ function AdminManageActivitiesComponent() {
 			<PrimaryAndSecondaryTypography
 				primary={t?.manageActivities}
 				primaryProps={{ variant: "h3", style: { margin: 0 } }}
+				containerProps={{ py: 1 }}
 			/>
 			<Box
 				sx={{
@@ -68,7 +67,7 @@ function AdminManageActivitiesComponent() {
 				<AdminManageActivitiesFiltersForm
 					defaultValues={{
 						region: currentUserRegion,
-            status: 'all',
+						status: "all",
 						...query,
 					}}
 					onCancel={toggleOpen}

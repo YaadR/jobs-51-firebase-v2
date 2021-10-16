@@ -23,9 +23,11 @@ import useToggle from "../hooks/general/useToggle";
 import useUserQuery from "../hooks/users/useUserQuery";
 import getUserPermissions from "../lib/helpers/getUserPermissions";
 import ApprovalDialog from "./ApprovalDialog";
+import { useHistory } from "react-router";
 
 export default function UserActivityListItem({ activityId }) {
 	const queryClient = useQueryClient();
+	const { push } = useHistory();
 	const { data: activity, isLoadingActivity } = useActivityQuery(activityId);
 	const { data: user, isLoadingUser } = useUserQuery(activity?.uid);
 	const [isOpen, toggleOpen] = useToggle(false);
@@ -58,7 +60,11 @@ export default function UserActivityListItem({ activityId }) {
 					{isLoading ? (
 						<Skeleton variant='circular' height={40} width={40} />
 					) : (
-						<Avatar src={user?.avatar} />
+						<Avatar
+							onClick={() => push(`/u/${user?.id}`)}
+							src={user?.avatar}
+							alt={user?.displayName}
+						/>
 					)}
 				</ListItemAvatar>
 				<ListItemText

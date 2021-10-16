@@ -80,7 +80,7 @@ export default function Layout({ children }) {
 					</Box>
 				</Button>
 			</Box>
-			<Container maxWidth='md'>{children}</Container>
+			<Container maxWidth='sm'>{children}</Container>
 		</>
 	);
 }

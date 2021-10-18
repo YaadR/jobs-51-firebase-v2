@@ -1,4 +1,5 @@
 import {
+	Badge,
 	Avatar,
 	Button,
 	Container,
@@ -14,6 +15,7 @@ import useCurrentUserQuery from "../hooks/auth/useCurrentUserQuery";
 import useSignOutMutation from "../hooks/auth/useSignOutMutation";
 import useAnchorEl from "../hooks/general/useAnchorEl";
 import useI18nContext from "../hooks/general/useI18nContext";
+import useNotificationsQuery from "../hooks/notifications/useNotificationsQuery";
 import { MdMenu } from "react-icons/md";
 import { routes } from "../navigation/";
 import getUserPermissions from "../lib/helpers/getUserPermissions";
@@ -24,6 +26,8 @@ export default function Layout({ children }) {
 	const { mutateAsync: signOut } = useSignOutMutation();
 	const [elementProps, triggerProps] = useAnchorEl();
 	const { t } = useI18nContext();
+	const { data: notifications } = useNotificationsQuery();
+	const hasUnreadNotifications = notifications?.find((v) => !v?.seen);
 
 	return (
 		<>
@@ -42,7 +46,16 @@ export default function Layout({ children }) {
 							>
 								<MenuItem sx={{ my: 1 }} onClick={elementProps.onClose}>
 									<ListItemIcon>
-										<Icon size={24} color='inherit' />
+										<Badge
+											color='error'
+											variant='dot'
+											dir='ltr'
+											invisible={
+												!hasUnreadNotifications || label !== "notifications"
+											}
+										>
+											<Icon size={24} color='inherit' />
+										</Badge>
 									</ListItemIcon>
 									{t?.[label]}
 								</MenuItem>
@@ -76,7 +89,14 @@ export default function Layout({ children }) {
 						backgroundColor: palette.background.paper,
 					}}
 				>
-					<Avatar src={data?.avatar} sx={{ height: 32, width: 32 }} />
+					<Badge
+						color='error'
+						variant='dot'
+						dir='ltr'
+						invisible={!hasUnreadNotifications}
+					>
+						<Avatar src={data?.avatar} sx={{ height: 32, width: 32 }} />
+					</Badge>
 					<Box component='span' lineHeight={0} mx={1}>
 						<MdMenu size={24} />
 					</Box>

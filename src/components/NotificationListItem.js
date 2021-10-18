@@ -6,21 +6,25 @@ import useNotificationQuery from "../hooks/notifications/useNotificationQuery";
 import useUpdateNotificationMutation from "../hooks/notifications/useUpdateNotificationMutation";
 import getNotificationText from "../lib/helpers/getNotificationText";
 import { he } from "date-fns/locale";
+import { Box, useTheme } from "@mui/system";
 
 const TIMEOUT = 30000;
 
 export default function NotificationListItem({ notificationId }) {
 	const { data } = useNotificationQuery(notificationId);
 	const { mutate } = useUpdateNotificationMutation(notificationId);
+	const { palette, spacing } = useTheme();
 	const { t } = useI18nContext();
 
-	// useEffect(() => {
-	// 	const clearNotification = async () => {
-	// 		setTimeout(mutate({ seen: true }), TIMEOUT);
-	// 	};
+	useEffect(() => {
+		const clearNotification = async () => {
+			if (!data?.seen) {
+				setTimeout(mutate({ seen: true }), TIMEOUT);
+			}
+		};
 
-	// 	clearNotification();
-	// }, []);
+		clearNotification();
+	}, []);
 
 	return (
 		<ListItem divider>
@@ -38,6 +42,16 @@ export default function NotificationListItem({ notificationId }) {
 				)}
 				primary={getNotificationText(data, t)}
 			/>
+			{!data?.seen && (
+				<Box
+					sx={{
+						borderRadius: spacing(1),
+						height: spacing(1),
+						width: spacing(1),
+						backgroundColor: palette.error.main,
+					}}
+				/>
+			)}
 		</ListItem>
 	);
 }

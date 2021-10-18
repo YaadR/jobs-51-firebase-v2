@@ -4,7 +4,7 @@ import { he } from "date-fns/locale";
 export default function getNotificationText(notification, t) {
 	switch (notification?.type) {
 		case "activityApproved": {
-			return `${getNotificationByName(notification)} ${
+			return `${getNotificationByName(notification, t)} ${
 				t?.approvedTheActivity
 			}  ${t?.fromDate} ${format(notification?.dateCreated, "dd/MM/yyyy", {
 				locale: he,
@@ -15,11 +15,11 @@ export default function getNotificationText(notification, t) {
 	}
 }
 
-const getNotificationByName = (notification) => {
+const getNotificationByName = (notification, t) => {
 	const { notificationBy } = notification;
 	if (notificationBy?.displayName) return notificationBy?.displayName;
 	if (notificationBy?.firstName)
 		return `${notificationBy?.firstName} ${notificationBy?.lastName}`;
 
-	return "";
+	return t?.manager;
 };

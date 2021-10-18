@@ -51,7 +51,7 @@ export default function AdminManageUsersFiltersForm({
 								disablePortal
 								getOptionLabel={(o) => o?.label}
 								id='combo-box-demo'
-								options={usersDisplayNames}
+								options={usersDisplayNames ?? []}
 								renderInput={(params) => (
 									<TextField {...params} label={t?.fullName} margin='none' />
 								)}

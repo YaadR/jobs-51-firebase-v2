@@ -118,6 +118,7 @@
 	"latestActivities": "פעילות אחרונה",
 	"pending": "ממתין לאישור",
 	"approved": "מאושר",
+	"approvedTheActivity": "אישר/ה את ההתנדבות",
 	"approvedActivities": "שעות התנדבות כמלגאי/ת עמותה",
 	"manageActivities": "ניהול פעילויות",
 	"manageUsers": "ניהול משתמשים",
@@ -150,6 +151,7 @@
 		"Fri": "שישי",
 		"Sat": "שבת"
 	},
+	"fromDate": "מתאריך",
 	"monthNumbers": {
 		"Jan": "01",
 		"Feb": "02",

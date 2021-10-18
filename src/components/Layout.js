@@ -20,7 +20,7 @@ import getUserPermissions from "../lib/helpers/getUserPermissions";
 
 export default function Layout({ children }) {
 	const { data } = useCurrentUserQuery();
-	const { zIndex, palette } = useTheme();
+	const { zIndex, palette, spacing } = useTheme();
 	const { mutateAsync: signOut } = useSignOutMutation();
 	const [elementProps, triggerProps] = useAnchorEl();
 	const { t } = useI18nContext();
@@ -40,9 +40,9 @@ export default function Layout({ children }) {
 								to={path}
 								key={path}
 							>
-								<MenuItem onClick={elementProps.onClose}>
-									<ListItemIcon style={{ minWidth: 32 }}>
-										<Icon color='inherit' />
+								<MenuItem sx={{ my: 1 }} onClick={elementProps.onClose}>
+									<ListItemIcon>
+										<Icon size={24} color='inherit' />
 									</ListItemIcon>
 									{t?.[label]}
 								</MenuItem>
@@ -52,7 +52,9 @@ export default function Layout({ children }) {
 				)}
 
 				<Divider />
-				<MenuItem onClick={signOut}>{t?.signOut}</MenuItem>
+				<MenuItem sx={{ my: 1 }} onClick={signOut}>
+					{t?.signOut}
+				</MenuItem>
 			</Menu>
 			<Box
 				px={2}
@@ -61,7 +63,7 @@ export default function Layout({ children }) {
 				justifyContent='flex-end'
 				position='sticky'
 				top={0}
-        zIndex={zIndex.appBar}
+				zIndex={zIndex.appBar}
 			>
 				<Button
 					variant='outlined'

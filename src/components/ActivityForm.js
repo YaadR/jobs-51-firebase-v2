@@ -23,7 +23,7 @@ const schema = yup
 	.object({
 		description: yup.string().required(),
 		date: yup.string().required(),
-		total: yup.number().positive().integer().required(),
+		total: yup.number().positive().required(),
 	})
 	.required();
 

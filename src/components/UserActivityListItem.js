@@ -24,6 +24,7 @@ import useUserQuery from "../hooks/users/useUserQuery";
 import getUserPermissions from "../lib/helpers/getUserPermissions";
 import ApprovalDialog from "./ApprovalDialog";
 import { useHistory } from "react-router";
+import useCreateNotificationMutation from "../hooks/notifications/useCreateNotificationMutation";
 
 export default function UserActivityListItem({ activityId }) {
 	const queryClient = useQueryClient();
@@ -36,9 +37,18 @@ export default function UserActivityListItem({ activityId }) {
 	const [isDeleting, toggleDeleting] = useToggle(false);
 	const refetchActivities = () =>
 		queryClient.invalidateQueries(["user-activities", user?.id]);
+	const { mutateAsync: createNotification } = useCreateNotificationMutation();
 	const { mutateAsync: updateAcitivtyAsync, isLoading: isApprovingAsync } =
 		useUpdateActivityMutation(activityId, {
-			onSuccess: () => refetchActivities(),
+			onSuccess: () => {
+				refetchActivities();
+				createNotification({
+					uid: activity?.uid,
+					type: "activityApproved",
+					activityId,
+					dateCreated: Date.now(),
+				});
+			},
 		});
 	const { mutateAsync: deleteActivityAsync, isLoading: isDeletingAsync } =
 		useDeleteActivityMutation(activityId, {

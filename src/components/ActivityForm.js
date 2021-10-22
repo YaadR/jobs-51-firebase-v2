@@ -91,7 +91,6 @@ export default function ActivityForm({
 					rows={4}
 					error={!!errors?.description}
 					helperText={errors?.description?.message}
-					label={t?.description}
 				/>
 				<Controller
 					control={control}
@@ -99,12 +98,9 @@ export default function ActivityForm({
 					render={({ field }) => (
 						<TextField
 							style={{ marginLeft: spacing(2) }}
-							step='0.5'
-							label={t?.hours}
 							error={!!errors?.total}
 							helperText={errors?.total?.message}
 							label={t?.totalHours}
-							type='number'
 							{...field}
 						/>
 					)}

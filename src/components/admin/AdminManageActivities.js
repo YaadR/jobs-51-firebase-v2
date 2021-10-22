@@ -7,10 +7,14 @@ import Dialog from "../Dialog";
 import BackButton from "../BackButton";
 import useCurrentUserQuery from "../../hooks/auth/useCurrentUserQuery";
 import { GoSettings } from "react-icons/go";
+import { MdFileDownload } from "react-icons/md";
 import PrimaryAndSecondaryTypography from "../PrimaryAndSecondaryTypography";
 import useAdminActivitiesContext from "../../hooks/general/useAdminActivitiesContext";
 import AdminManageActivitiesFiltersForm from "./AdminManageActivitiesFiltersForm";
 import ActivitiesList from "../ActivitiesList";
+import { CSVLink } from "react-csv";
+import getActivitiesCSV from "../../lib/helpers/getActivitiesCSV";
+import useUsersQuery from "../../hooks/users/useUsersQuery";
 
 export default function AdminManageUsers() {
 	return (
@@ -21,10 +25,11 @@ export default function AdminManageUsers() {
 }
 
 function AdminManageActivitiesComponent() {
-	const { query, toggleOpen, isOpen, updateQuery } =
+	const { query, toggleOpen, data, isOpen, updateQuery } =
 		useAdminActivitiesContext();
 	const { zIndex, palette, spacing } = useTheme();
 	const { t } = useI18nContext();
+	const { data:users } = useUsersQuery();
 	const { data: currentUserRegion } = useCurrentUserQuery({
 		select: (d) => d?.region,
 	});
@@ -54,6 +59,15 @@ function AdminManageActivitiesComponent() {
 					variant='outlined'
 				>
 					{t?.filterResults}
+				</Button>
+				<Button
+					startIcon={<MdFileDownload size={16} />}
+					sx={{ mx: 1 }}
+					variant='outlined'
+				>
+					<CSVLink data={getActivitiesCSV(data, t, users)}>
+						{t?.download}
+					</CSVLink>
 				</Button>
 			</Box>
 			<ActivitiesList query={query} />

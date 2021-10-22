@@ -59,7 +59,7 @@ export default function UserHeader({ uid, backButton = false }) {
 						primaryProps={{ variant: "h4", gutterBottom: true }}
 						primary={
 							!!user ? (
-								`${user?.firstName} ${user?.lastName}`
+								`${user?.displayName}`
 							) : (
 								<Skeleton variant='text' width={80} />
 							)

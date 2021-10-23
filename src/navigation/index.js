@@ -3,8 +3,8 @@ import Admin from "../components/admin/Admin";
 import Settings from "../components/Settings";
 import User from "../components/User";
 import { BsLightningChargeFill } from "react-icons/bs";
-import { IoMdNotificationsOutline } from "react-icons/io";
 import { ImStatsBars } from "react-icons/im";
+import { FaCog, FaBell } from "react-icons/fa";
 import AdminManageActivities from "../components/admin/AdminManageActivities";
 import AdminManageUsers from "../components/admin/AdminManageUsers";
 import Notifications from "../components/Notifications";
@@ -19,15 +19,6 @@ export const routes = [
 		isMenuOption: true,
 		icon: BsLightningChargeFill,
 	},
-	// {
-	// 	component: Settings,
-	// 	path: "/settings",
-	// 	exact: true,
-	// 	minRole: 1,
-	// 	label: "settings",
-	// 	isMenuOption: true,
-	// 	icon: FaCog,
-	// },
 	{
 		component: Admin,
 		path: "/admin",
@@ -64,6 +55,6 @@ export const routes = [
 		label: "notifications",
 		minRole: 1,
 		isMenuOption: true,
-		icon: IoMdNotificationsOutline,
+		icon: FaBell,
 	},
 ];

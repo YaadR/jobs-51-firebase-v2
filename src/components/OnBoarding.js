@@ -9,6 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import FormTextField from "./form/FormTextField";
 import useCurrentUserQuery from "../hooks/auth/useCurrentUserQuery";
+import PrimaryAndSecondaryTypography from "./PrimaryAndSecondaryTypography";
 
 const schema = yup
 	.object({
@@ -21,9 +22,9 @@ export default function OnBoarding() {
 	const { data: user, refetch } = useCurrentUserQuery();
 	const { handleSubmit, control } = useForm({
 		defaultValues: {
-      displayName: user?.displayName,
-      region: user?.region ?? constants.REGIONS?.[0]
-    },
+			displayName: user?.displayName,
+			region: user?.region ?? constants.REGIONS?.[0],
+		},
 		resolver: yupResolver(schema),
 	});
 	const { t } = useI18nContext();
@@ -33,7 +34,14 @@ export default function OnBoarding() {
 
 	return (
 		<Container maxWidth='sm'>
-			<Form isLoading={isLoading} onSubmit={handleSubmit(mutateAsync)}>
+			<PrimaryAndSecondaryTypography primary={t?.welcome} secondary={t?.beforeWeStart} />
+			<Form
+				buttonProps={{ fullWidth: true }}
+				cancelButton={false}
+				buttonLabel={t?.continue}
+				isLoading={isLoading}
+				onSubmit={handleSubmit(mutateAsync)}
+			>
 				<FormTextField
 					label={t?.fullName}
 					name='displayName'

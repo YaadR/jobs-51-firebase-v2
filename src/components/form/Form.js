@@ -9,6 +9,8 @@ export default function Form({
 	onCancel,
 	children,
 	isLoading,
+  cancelButton = true,
+  buttonProps
 }) {
 	const { t } = useI18nContext();
 
@@ -16,20 +18,23 @@ export default function Form({
 		<form onSubmit={onSubmit}>
 			{children}
 			<Box mt={4} display='flex' justifyContent='flex-end'>
-				<Button
-					disabled={isLoading}
-					sx={{ mx: 1 }}
-					onClick={onCancel}
-					color='inherit'
-				>
-					{t?.cancel}
-				</Button>
+				{cancelButton && (
+					<Button
+						disabled={isLoading}
+						sx={{ mx: 1 }}
+						onClick={onCancel}
+						color='inherit'
+					>
+						{t?.cancel}
+					</Button>
+				)}
 				<LoadingButton
 					disabled={isLoading}
 					variant='contained'
 					color='primary'
 					type='submit'
 					loading={isLoading}
+					{...buttonProps}
 				>
 					{buttonLabel ?? t?.submit}
 				</LoadingButton>

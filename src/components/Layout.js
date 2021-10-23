@@ -54,7 +54,7 @@ export default function Layout({ children }) {
 												!hasUnreadNotifications || label !== "notifications"
 											}
 										>
-											<Icon size={24} color='inherit' />
+											<Icon size={16} color='inherit' />
 										</Badge>
 									</ListItemIcon>
 									{t?.[label]}

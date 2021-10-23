@@ -1,5 +1,12 @@
 import { LoadingButton } from "@mui/lab";
-import { Alert, Avatar, Button, Skeleton, Typography } from "@mui/material";
+import {
+	Alert,
+	Avatar,
+	Button,
+	Link,
+	Skeleton,
+	Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import constants from "../constants";
 import useCurrentUserQuery from "../hooks/auth/useCurrentUserQuery";
@@ -11,15 +18,20 @@ import useUserQuery from "../hooks/users/useUserQuery";
 import getUserHeaderSecondaryText from "../lib/helpers/getUserHeaderSecondaryText";
 import getUserPermissions from "../lib/helpers/getUserPermissions";
 import BackButton from "./BackButton";
+import Dialog from "./Dialog";
 import PrimaryAndSecondaryTypography from "./PrimaryAndSecondaryTypography";
+import UserForm from "./UserForm";
 
 export default function UserHeader({ uid, backButton = false }) {
 	const { t } = useI18nContext();
 	const { data: user, refetch } = useUserQuery(uid);
 	const { data: currentUser } = useCurrentUserQuery();
+	const [isEditing, toggleEditing] = useToggle(false);
 	const { mutateAsync, isLoading } = useUpdateUserMutation(uid, {
 		onSuccess: refetch,
 	});
+
+	const isCurrentUserOrAdmin = uid === currentUser?.uid;
 
 	return (
 		<>
@@ -59,7 +71,15 @@ export default function UserHeader({ uid, backButton = false }) {
 						primaryProps={{ variant: "h4", gutterBottom: true }}
 						primary={
 							!!user ? (
-								`${user?.displayName}`
+								<Box component='span' display='flex' alignItems='center'>
+									{user?.displayName}
+									{isCurrentUserOrAdmin && (
+										<>
+											<Box sx={{ mx: 1 }}>•</Box>
+											<Link onClick={toggleEditing}>{t?.editProfile}</Link>
+										</>
+									)}
+								</Box>
 							) : (
 								<Skeleton variant='text' width={80} />
 							)
@@ -82,6 +102,22 @@ export default function UserHeader({ uid, backButton = false }) {
 					<Skeleton variant='circular' height={40} width={40} />
 				)}
 			</Box>
+			<Dialog
+				maxWidth='sm'
+				fullWidth
+				open={isEditing}
+				onClose={toggleEditing}
+				title={t?.editProfile}
+			>
+				<UserForm
+					defaultValues={user}
+					isLoading={isLoading}
+					onSubmit={(v) => {
+						mutateAsync(v).then(() => toggleEditing());
+					}}
+					onCancel={toggleEditing}
+				/>
+			</Dialog>
 		</>
 	);
 }

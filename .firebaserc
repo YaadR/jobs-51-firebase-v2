@@ -1,6 +1,14 @@
 {
   "projects": {
-    "default": "jobs-51",
-    "dev": "jobs-51-dev"
+    "default": "jobs-51"
+  },
+  "targets": {
+    "jobs-51-dev": {
+      "hosting": {
+        "jobs-51": [
+          "jobs-51"
+        ]
+      }
+    }
   }
 }

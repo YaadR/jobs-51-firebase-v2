@@ -24,8 +24,9 @@ export const fetchOrCreateUser = async () => {
 		} else {
 			currentUser = {
 				email: auth.currentUser?.email,
-				firstName: auth.currentUser?.displayName?.split?.[0],
-				lastName: auth.currentUser?.displayName?.split?.[1],
+				displayName: auth.currentUser.displayName || "",
+				firstName: auth.currentUser?.displayName?.split?.[0] || "",
+				lastName: auth.currentUser?.displayName?.split?.[1] || "",
 				dateCreated: Date.now(),
 				region: "",
 				role: "pending",

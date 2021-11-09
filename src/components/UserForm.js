@@ -8,14 +8,18 @@ import FormSelectField from "./form/FormSelectField";
 import FormTextField from "./form/FormTextField";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Button } from "@mui/material";
+import useToggle from "../hooks/general/useToggle";
+import ApprovalDialog from "./ApprovalDialog";
 
 export default function UserForm({
 	defaultValues,
 	onSubmit,
 	isLoading,
 	onCancel,
+	onDelete,
 }) {
-  const { t } = useI18nContext();
+	const { t } = useI18nContext();
 	const schema = yup
 		.object({
 			displayName: yup.string().required(t?.formErrors?.descriptionError),
@@ -33,32 +37,47 @@ export default function UserForm({
 	});
 	const { data } = useCurrentUserQuery();
 	const isCurrentUserAdmin = getUserPermissions(data);
+	const [isDeleting, toggleDeleting] = useToggle(false);
 
 	return (
-		<Form
-			onSubmit={handleSubmit(onSubmit)}
-			onCancel={onCancel}
-			isLoading={isLoading}
-		>
-			<FormTextField
-				fullWidth
-				name='displayName'
-				control={control}
-				label={t?.fullName}
+		<>
+			<Form
+				onSubmit={handleSubmit(onSubmit)}
+				onCancel={onCancel}
+				isLoading={isLoading}
+			>
+				<FormTextField
+					fullWidth
+					name='displayName'
+					control={control}
+					label={t?.fullName}
+				/>
+				<FormTextField
+					fullWidth
+					name='phone'
+					control={control}
+					label={t?.phone}
+				/>
+				<FormSelectField
+					name='region'
+					label={t?.region}
+					disabled={!isCurrentUserAdmin}
+					control={control}
+					options={constants.REGIONS}
+				/>
+				{onDelete && (
+					<Button onClick={toggleDeleting} color='error' variant='outlined'>
+						{t?.deleteUser}
+					</Button>
+				)}
+			</Form>
+			<ApprovalDialog
+				open={isDeleting}
+				onClose={toggleDeleting}
+        onApprove={onDelete}
+				text={t?.areYouSure}
+        primaryButtonProps={{color: 'error'}}
 			/>
-			<FormTextField
-				fullWidth
-				name='phone'
-				control={control}
-				label={t?.phone}
-			/>
-			<FormSelectField
-				name='region'
-				label={t?.region}
-				disabled={!isCurrentUserAdmin}
-				control={control}
-				options={constants.REGIONS}
-			/>
-		</Form>
+		</>
 	);
 }

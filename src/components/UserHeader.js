@@ -13,6 +13,7 @@ import useCurrentUserQuery from "../hooks/auth/useCurrentUserQuery";
 import useI18nContext from "../hooks/general/useI18nContext";
 import useToggle from "../hooks/general/useToggle";
 import useUpdateUserMutation from "../hooks/users/useUpdateUserMutation";
+import useDeleteUserMutation from "../hooks/users/useDeleteUserMutation";
 import useUserQuery from "../hooks/users/useUserQuery";
 
 import getUserHeaderSecondaryText from "../lib/helpers/getUserHeaderSecondaryText";
@@ -21,17 +22,24 @@ import BackButton from "./BackButton";
 import Dialog from "./Dialog";
 import PrimaryAndSecondaryTypography from "./PrimaryAndSecondaryTypography";
 import UserForm from "./UserForm";
+import { useHistory } from "react-router";
 
 export default function UserHeader({ uid, backButton = false }) {
 	const { t } = useI18nContext();
 	const { data: user, refetch } = useUserQuery(uid);
 	const { data: currentUser } = useCurrentUserQuery();
+	const { goBack } = useHistory();
 	const [isEditing, toggleEditing] = useToggle(false);
+	const { mutateAsync: deleteUserAsync, isLoading: isDeletingAsync } =
+		useDeleteUserMutation(uid, {
+			onSuccess: goBack,
+		});
 	const { mutateAsync, isLoading } = useUpdateUserMutation(uid, {
 		onSuccess: refetch,
 	});
 
-	const isCurrentUserOrAdmin = uid === currentUser?.uid;
+	const isAdmin = getUserPermissions(currentUser) >= 2;
+	const isCurrentUser = uid === currentUser?.uid;
 
 	return (
 		<>
@@ -73,7 +81,7 @@ export default function UserHeader({ uid, backButton = false }) {
 							!!user ? (
 								<Box component='span' display='flex' alignItems='center'>
 									{user?.displayName}
-									{isCurrentUserOrAdmin && (
+									{(isCurrentUser || isAdmin) && (
 										<>
 											<Box sx={{ mx: 1 }}>•</Box>
 											<Link onClick={toggleEditing}>{t?.editProfile}</Link>
@@ -116,6 +124,7 @@ export default function UserHeader({ uid, backButton = false }) {
 						mutateAsync(v).then(() => toggleEditing());
 					}}
 					onCancel={toggleEditing}
+					onDelete={isAdmin && !isCurrentUser ? deleteUserAsync : null}
 				/>
 			</Dialog>
 		</>

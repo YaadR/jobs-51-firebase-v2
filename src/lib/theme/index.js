@@ -43,6 +43,9 @@ export const baseTheme = createTheme({
 			fontFamily: ["Rubik"],
 		},
 	},
+  shape: {
+    borderRadius: 4
+  },
 	components: {
 		MuiButton: {
 			defaultProps: {

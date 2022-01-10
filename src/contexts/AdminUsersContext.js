@@ -16,7 +16,7 @@ export const AdminUsersProvider = ({ children }) => {
 
 	// @Y- hookRef for user data implementation is needed -
 	// AdminActivitiesProvider under AdminActivitiesContext for example
-	/*
+	
 		const hookRef = useQuery(["users", query], async () => {
 		const res = await getUsers(query, lastResult);
 		setLastResult(res?.lastResult);
@@ -26,7 +26,7 @@ export const AdminUsersProvider = ({ children }) => {
 		data?.forEach((a) => queryClient.setQueryData(["user-activity", a?.id], a));
 		return data;
 	});
-	*/
+	
 	const updateQuery = (updater) => {
 		replace({
 			pathname,
@@ -41,6 +41,7 @@ export const AdminUsersProvider = ({ children }) => {
 				toggleOpen,
 				query,
 				updateQuery,
+				...hookRef,
 			}}
 		>
 			{children}

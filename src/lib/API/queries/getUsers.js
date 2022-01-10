@@ -1,7 +1,8 @@
 import { Users } from "../models";
 import t from "../../translations/he";
 
-// @Y- this block is copied from getActivities as is. yet to be adjusted
+// @Y- this block is copied from getActivities "as is". yet to be adjusted
+/**/
 export default async function getUsers(query, lastResult) {
 	let queryRef = Users.orderBy("dateCreated", "desc");
 
@@ -29,3 +30,4 @@ export default async function getUsers(query, lastResult) {
 			data: s.docs.map((d) => ({ id: d.id, ...d.data() })),
 		}));
 }
+/**/

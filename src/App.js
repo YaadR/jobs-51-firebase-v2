@@ -10,6 +10,8 @@ import { CssBaseline } from "@mui/material";
 import usePrefersDarkTheme from "./hooks/general/usePrefersDarkTheme";
 import { useMemo } from "react";
 
+// firebase deploy -f --project jobs-51 --only hosting:jobs-51
+
 const queryClient = new QueryClient();
 
 function App() {

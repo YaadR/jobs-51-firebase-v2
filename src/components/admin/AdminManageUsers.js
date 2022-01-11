@@ -7,17 +7,18 @@ import useAdminUsersContext from "../../hooks/general/useAdminUsersContext";
 import Dialog from "../Dialog";
 import AdminManageUsersFiltersForm from "./AdminManageUsersFiltersForm";
 import UsersList from "../UsersList";
+import { CSVLink } from "react-csv";
+import getUsersCSV from "../../lib/helpers/getUsersCSV";
 import BackButton from "../BackButton";
 import useCurrentUserQuery from "../../hooks/auth/useCurrentUserQuery";
 import { GoSettings } from "react-icons/go";
-import PrimaryAndSecondaryTypography from "../PrimaryAndSecondaryTypography";
 import { MdFileDownload } from "react-icons/md";
-import { CSVLink } from "react-csv";
-import getUsersCSV from "../../lib/helpers/getUsersCSV";
+import PrimaryAndSecondaryTypography from "../PrimaryAndSecondaryTypography";
 import useUsersQuery from "../../hooks/users/useUsersQuery";
 import { useEffect, useState } from "react";
 import useToggle from "../../hooks/general/useToggle";
 import DownloadDialog from "../DownloadDialog";
+
 
 export default function AdminManageUsers() {
 	return (
@@ -28,7 +29,7 @@ export default function AdminManageUsers() {
 }
 
 function AdminManageUsersComponent() {
-	const { query, toggleOpen, isOpen, updateQuery } = useAdminUsersContext();
+	const { query, toggleOpen,data, isOpen, updateQuery } = useAdminUsersContext();
 	const { zIndex, palette, spacing } = useTheme();
 	const { t } = useI18nContext();
 	const { data: allUsers } = useUsersQuery(query);
@@ -70,6 +71,7 @@ function AdminManageUsersComponent() {
 					onClick={toggleDialog}
 				>
 					{t?.download}
+				>
 				</Button>
 			</Box>
 			<UsersList query={query} />

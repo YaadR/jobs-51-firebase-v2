@@ -29,7 +29,7 @@ function AdminManageActivitiesComponent() {
 		useAdminActivitiesContext();
 	const { zIndex, palette, spacing } = useTheme();
 	const { t } = useI18nContext();
-	const { data:users } = useUsersQuery();
+	const { data: users } = useUsersQuery();
 	const { data: currentUserRegion } = useCurrentUserQuery({
 		select: (d) => d?.region,
 	});
@@ -65,7 +65,7 @@ function AdminManageActivitiesComponent() {
 					sx={{ mx: 1 }}
 					variant='outlined'
 				>
-					<CSVLink data={getActivitiesCSV(data, t, users)}>
+					<CSVLink filename='activities-list' data={getActivitiesCSV(data, t, users)}>
 						{t?.download}
 					</CSVLink>
 				</Button>
